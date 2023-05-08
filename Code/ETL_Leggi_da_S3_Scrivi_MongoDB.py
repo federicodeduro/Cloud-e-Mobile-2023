@@ -90,8 +90,8 @@ tedx_dataset_agg_1 = tedx_dataset.join(tags_dataset_agg, tedx_dataset.idx == tag
     .select(col("idx").alias("_id"), col("*")) \
 
 ##### CREATE THE AGGREGATE MODEL, ADD WATCH_NEXT TO TEDX_DATASET
-watch_next_dataset_agg_a  = watch_next_dataset.groupBy(col("watch_next_idx")).agg({'watch_next_idx':'count'}).withColumnRenamed("count(watch_next_idx)", "count_wn")
-watch_next_dataset_agg_b = watch_next_dataset.groupBy(col("idx").alias("idx_ref")).agg(collect_list("watch_next_idx").alias("watch_next_s"))
+watch_next_dataset_agg_a  = watch_next_dataset.groupBy(col("watch_next_idx")).agg({'watch_next_idx':'count'}).withColumnRenamed("count(watch_next_idx)", "n_wn")
+watch_next_dataset_agg_b = watch_next_dataset.groupBy(col("idx").alias("idx_ref")).agg(collect_list("watch_next_idx").alias("watch_next"))
 watch_next_dataset_agg_2 = watch_next_dataset_agg_a.join(watch_next_dataset_agg_b, watch_next_dataset_agg_a.watch_next_idx == watch_next_dataset_agg_b.idx_ref, "left")\
     .drop("watch_next_idx") \
 
